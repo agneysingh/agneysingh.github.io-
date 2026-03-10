@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Agney Singh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+/* ====================================================
+   RESET & BASE
+==================================================== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#07101f;
+  --navy2:#0d1b2e;
+  --navy3:#102240;
+  --teal:#0ecfbe;
+  --teal2:#06b6a4;
+  --teal-dim:rgba(14,207,190,.12);
+  --teal-glow:rgba(14,207,190,.25);
+  --white:#ffffff;
+  --off:#f7f9fb;
+  --border:#e4eaf2;
+  --border-dark:rgba(255,255,255,.07);
+  --text:#1a2535;
+  --muted:#64748b;
+  --light:#94a3b8;
+  --card-shadow:0 2px 20px rgba(0,0,0,.06),0 1px 4px rgba(0,0,0,.04);
+  --card-hover:0 12px 48px rgba(0,0,0,.12),0 4px 12px rgba(0,0,0,.06);
+  --font-d:'Bricolage Grotesque',sans-serif;
+  --font-b:'Inter',sans-serif;
+  --nav:68px;
+  --r:14px;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:var(--font-b);background:var(--white);color:var(--text);-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+img{display:block;max-width:100%}
+
+/* ====================================================
+   UTILITY
+==================================================== */
+.container{max-width:1120px;margin:0 auto;padding:0 2rem}
+.eyebrow{font-size:.7rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--teal2);display:block;margin-bottom:.6rem}
+.eyebrow-dim{color:rgba(14,207,190,.6)}
+.sh{font-family:var(--font-d);font-size:clamp(2rem,4.5vw,3rem);font-weight:800;line-height:1.1;color:var(--text)}
+.sh em{font-style:italic;color:var(--teal2)}
+.sh-light{color:var(--white)}
+.sh-light em{color:var(--teal)}
+.body-text{font-size:1.025rem;font-weight:300;color:var(--muted);line-height:1.8}
+.body-text strong{font-weight:600;color:var(--text)}
+section{padding:6rem 0}
+
+/* ====================================================
+   SCROLL REVEAL
+==================================================== */
+.r{opacity:1;transform:none}
+.r.animate{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.r.animate.on{opacity:1;transform:none}
+.r.animate.d1{transition-delay:.1s}.r.animate.d2{transition-delay:.2s}.r.animate.d3{transition-delay:.3s}
+
+/* ====================================================
+   NAV
+==================================================== */
+#nav{
+  position:fixed;top:0;left:0;right:0;z-index:999;
+  height:var(--nav);
+  background:var(--navy);
+  border-bottom:1px solid var(--border-dark);
+  transition:box-shadow .3s;
+}
+#nav.up{box-shadow:0 4px 30px rgba(0,0,0,.5)}
+.nav-wrap{
+  max-width:1120px;margin:0 auto;padding:0 2rem;
+  height:100%;display:flex;align-items:center;justify-content:space-between;
+}
+.logo{font-family:var(--font-d);font-size:1.35rem;font-weight:800;color:var(--white);letter-spacing:-.01em}
+.logo span{color:var(--teal)}
+.nav-ul{display:flex;align-items:center;gap:2rem}
+.nav-a{font-size:.875rem;font-weight:500;color:rgba(255,255,255,.5);transition:color .2s;position:relative}
+.nav-a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1.5px;background:var(--teal);transform:scaleX(0);transform-origin:left;transition:transform .25s}
+.nav-a:hover{color:var(--white)}
+.nav-a:hover::after{transform:scaleX(1)}
+.nav-pill{background:var(--teal);color:var(--navy)!important;padding:.42rem 1.1rem;border-radius:50px;font-weight:700;transition:background .2s,transform .2s!important}
+.nav-pill::after{display:none!important}
+.nav-pill:hover{background:#14e8d5;transform:translateY(-1px)}
+
+.ham{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
+.ham-s{display:block;width:22px;height:2px;background:var(--white);border-radius:2px;transition:transform .3s,opacity .2s}
+.ham.open .ham-s:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.ham.open .ham-s:nth-child(2){opacity:0}
+.ham.open .ham-s:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+.drawer{
+  position:fixed;top:var(--nav);left:0;right:0;z-index:998;
+  background:var(--navy2);border-bottom:1px solid var(--border-dark);
+  max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s;
+}
+.drawer.open{max-height:360px;padding:.5rem 0 1.5rem}
+.drawer ul{padding:0 2rem;display:flex;flex-direction:column}
+.drawer-a{display:block;padding:.85rem 0;font-size:1.05rem;font-weight:500;color:rgba(255,255,255,.65);border-bottom:1px solid var(--border-dark);transition:color .2s}
+.drawer-a:hover{color:var(--teal)}
+
+/* ====================================================
+   HERO
+==================================================== */
+#hero{
+  min-height:100vh;
+  background:var(--navy);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+  padding:calc(var(--nav) + 3rem) 2rem 4rem;
+  text-align:center;
+}
+
+/* grid */
+#hero::before{
+  content:'';position:absolute;inset:0;
+  background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+  background-size:72px 72px;
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 40%,black 30%,transparent 100%);
+  pointer-events:none;
+}
+
+/* glow blobs */
+.blob{position:absolute;border-radius:50%;filter:blur(100px);pointer-events:none;animation:float 14s ease-in-out infinite alternate}
+.blob-a{width:700px;height:700px;background:radial-gradient(circle,rgba(14,207,190,.13),transparent 65%);top:-250px;right:-200px}
+.blob-b{width:500px;height:500px;background:radial-gradient(circle,rgba(14,207,190,.08),transparent 65%);bottom:0;left:-150px;animation-delay:-7s}
+@keyframes float{from{transform:translate(0,0) scale(1)}to{transform:translate(20px,30px) scale(1.05)}}
+
+.hero-inner{position:relative;z-index:1;max-width:880px}
+
+.hero-chip{
+  display:inline-flex;align-items:center;gap:.55rem;
+  border:1px solid rgba(14,207,190,.2);background:rgba(14,207,190,.06);
+  color:rgba(255,255,255,.6);font-size:.78rem;font-weight:500;letter-spacing:.06em;
+  padding:.42rem 1.1rem;border-radius:50px;margin-bottom:2.2rem;
+}
+.chip-dot{width:7px;height:7px;border-radius:50%;background:var(--teal);animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1;box-shadow:0 0 0 0 var(--teal-glow)}50%{opacity:.7;box-shadow:0 0 0 6px transparent}}
+
+.hero-name{
+  font-family:var(--font-d);
+  font-size:clamp(5rem,14vw,10.5rem);
+  font-weight:800;line-height:.93;
+  color:var(--white);
+  letter-spacing:-.03em;
+  margin-bottom:1.5rem;
+}
+.hero-name .italic{font-style:italic;color:var(--teal)}
+
+.hero-role{
+  font-size:clamp(.95rem,1.5vw,1.15rem);
+  font-weight:300;color:rgba(255,255,255,.45);
+  letter-spacing:.04em;text-transform:uppercase;
+  margin-bottom:.9rem;
+}
+
+.hero-tag{
+  font-size:clamp(1rem,2vw,1.2rem);
+  font-weight:300;color:rgba(255,255,255,.55);
+  max-width:560px;margin:0 auto 2.8rem;
+  line-height:1.7;
+}
+
+.hero-btns{display:flex;gap:.85rem;justify-content:center;flex-wrap:wrap;margin-bottom:4rem}
+.btn-p{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:var(--teal);color:var(--navy);
+  padding:.82rem 1.9rem;border-radius:50px;
+  font-weight:700;font-size:.9rem;font-family:var(--font-b);
+  box-shadow:0 0 40px var(--teal-glow);
+  transition:background .2s,transform .2s,box-shadow .2s;
+}
+.btn-p:hover{background:#14e8d5;transform:translateY(-2px);box-shadow:0 0 50px rgba(14,207,190,.4)}
+.btn-g{
+  display:inline-flex;align-items:center;
+  border:1.5px solid rgba(255,255,255,.15);color:rgba(255,255,255,.7);
+  padding:.82rem 1.9rem;border-radius:50px;
+  font-weight:500;font-size:.9rem;font-family:var(--font-b);
+  transition:border-color .2s,color .2s,transform .2s;
+}
+.btn-g:hover{border-color:var(--teal);color:var(--white);transform:translateY(-2px)}
+
+/* stats strip */
+.hero-stats{
+  display:flex;align-items:stretch;
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:var(--r);
+  overflow:hidden;
+  width:100%;max-width:720px;margin:2.8rem auto 0;
+}
+.hstat{flex:1;padding:1.4rem 1rem;text-align:center;border-right:1px solid rgba(255,255,255,.07);transition:background .25s}
+.hstat:last-child{border-right:none}
+.hstat:hover{background:rgba(14,207,190,.05)}
+.hstat-v{font-family:var(--font-d);font-size:1.65rem;font-weight:800;color:var(--teal);display:block;line-height:1}
+.hstat-l{font-size:.7rem;color:rgba(255,255,255,.35);margin-top:.35rem;line-height:1.4;display:block}
+
+/* scroll arrow */
+.scroll-arrow{
+  position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);
+  color:rgba(255,255,255,.2);animation:bounce 2.5s ease-in-out infinite;
+  transition:color .2s;z-index:1;
+}
+.scroll-arrow:hover{color:var(--teal)}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}55%{transform:translateX(-50%) translateY(8px)}}
+
+/* ====================================================
+   ABOUT
+==================================================== */
+#about{background:var(--white)}
+.about-layout{display:grid;grid-template-columns:5fr 7fr;gap:5rem;align-items:start}
+.about-sticky{position:sticky;top:calc(var(--nav) + 2rem)}
+.about-label{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:var(--off);border:1px solid var(--border);
+  padding:.35rem .9rem;border-radius:50px;
+  font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--teal2);
+  margin-bottom:1.5rem;
+}
+.about-label-dot{width:6px;height:6px;border-radius:50%;background:var(--teal2)}
+.about-sh{font-family:var(--font-d);font-size:clamp(2.2rem,4vw,3rem);font-weight:800;line-height:1.08;color:var(--text);margin-bottom:1.5rem}
+.about-sh em{font-style:italic;color:var(--teal2)}
+.teal-line{width:44px;height:3px;background:linear-gradient(90deg,var(--teal),transparent);border-radius:2px}
+.about-body p{font-size:1.025rem;font-weight:300;color:var(--muted);line-height:1.85;margin-bottom:1.2rem}
+.about-body strong{font-weight:600;color:var(--text)}
+.chip-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.6rem}
+.chip{
+  background:var(--off);border:1px solid var(--border);
+  color:var(--muted);font-size:.78rem;font-weight:500;
+  padding:.32rem .85rem;border-radius:50px;
+}
+
+/* ====================================================
+   WORK
+==================================================== */
+#work{background:var(--off)}
+.sec-head{margin-bottom:3.5rem}
+.work-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem}
+
+.wc{
+  background:var(--white);border:1px solid var(--border);
+  border-radius:var(--r);display:flex;flex-direction:column;
+  overflow:hidden;
+  transition:transform .3s,box-shadow .3s,border-color .3s;
+  position:relative;
+}
+.wc:hover{transform:translateY(-5px);box-shadow:var(--card-hover);border-color:rgba(14,207,190,.3)}
+
+.wc-top{
+  padding:1.4rem 1.6rem 1.1rem;
+  background:var(--off);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  min-height:76px;
+}
+.logo-wrap{height:38px;display:flex;align-items:center;max-width:150px}
+.co-img{max-height:34px;max-width:140px;object-fit:contain}
+.logo-init{
+  height:40px;width:54px;
+  background:linear-gradient(135deg,var(--teal),#0891b2);
+  border-radius:9px;display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-d);font-weight:800;font-size:.9rem;color:var(--navy);
+}
+.logo-fb{display:none;height:34px;padding:0 .75rem;background:var(--off);border:1px solid var(--border);border-radius:8px;align-items:center;font-weight:700;font-size:.85rem;color:var(--teal2)}
+
+.wtag{font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.28rem .75rem;border-radius:50px;white-space:nowrap}
+.t-strat{background:#dcfce7;color:#166534}
+.t-con{background:#fee2e2;color:#991b1b}
+.t-vc{background:#ede9fe;color:#5b21b6}
+.t-ops{background:#fef3c7;color:#854d0e}
+
+.wc-body{padding:1.4rem 1.6rem;flex:1}
+.wdate{font-size:.72rem;color:var(--light);font-weight:500;margin-bottom:.4rem}
+.wrole{font-family:var(--font-d);font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:.2rem}
+.wconame{font-size:.82rem;font-weight:600;color:var(--teal2);margin-bottom:.85rem}
+.wdesc{font-size:.875rem;font-weight:300;color:var(--muted);line-height:1.72;margin-bottom:.9rem}
+.wbullets{padding-left:.9rem}
+.wbullets li{list-style:disc;font-size:.82rem;color:var(--muted);line-height:1.65;margin-bottom:.2rem}
+.wbullets li::marker{color:var(--teal)}
+
+.wc-foot{
+  padding:.9rem 1.6rem;background:var(--off);
+  border-top:1px solid var(--border);
+  display:flex;gap:.6rem;flex-wrap:wrap;
+}
+.wmet{
+  background:#f0fdfa;border:1px solid #99f6e4;
+  color:#0f766e;font-size:.72rem;font-weight:600;
+  padding:.26rem .75rem;border-radius:50px;
+}
+
+/* ====================================================
+   TESTIMONIALS
+==================================================== */
+#testimonials{background:var(--navy);padding:5rem 0}
+.tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem}
+.tc{
+  background:var(--navy2);border:1px solid var(--border-dark);
+  border-radius:var(--r);padding:1.85rem;
+  transition:border-color .3s,transform .3s;
+  position:relative;overflow:hidden;
+}
+.tc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--teal),transparent);opacity:0;transition:opacity .3s}
+.tc:hover{border-color:rgba(14,207,190,.25);transform:translateY(-4px)}
+.tc:hover::before{opacity:1}
+.tq-mark{font-family:Georgia,serif;font-size:3.5rem;line-height:.9;color:var(--teal);opacity:.3;margin-bottom:.75rem}
+.tq{font-size:.875rem;font-weight:300;color:rgba(255,255,255,.6);line-height:1.8;margin-bottom:1.5rem}
+.ta{display:flex;align-items:center;gap:.85rem}
+.tav{
+  width:40px;height:40px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--teal),#0891b2);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-d);font-weight:800;font-size:.8rem;color:var(--navy);
+}
+.tn{font-weight:600;font-size:.875rem;color:var(--white)}
+.tr{font-size:.73rem;color:rgba(255,255,255,.35);margin-top:.1rem}
+
+/* ====================================================
+   SKILLS
+==================================================== */
+#skills{background:var(--white)}
+.skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem}
+.sk-card{background:var(--off);border:1px solid var(--border);border-radius:var(--r);padding:1.85rem;transition:box-shadow .25s}
+.sk-card:hover{box-shadow:var(--card-hover)}
+.sk-title{font-family:var(--font-d);font-size:.82rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--text);margin-bottom:1.4rem;display:flex;align-items:center;gap:.5rem}
+
+/* bars */
+.bars{display:flex;flex-direction:column;gap:.9rem}
+.bar-row{display:grid;grid-template-columns:130px 1fr 34px;align-items:center;gap:.75rem}
+.bar-label{font-size:.82rem;color:var(--muted);font-weight:400}
+.bar-track{height:5px;background:var(--border);border-radius:3px;overflow:hidden}
+.bar-fill{height:100%;width:0;border-radius:3px;background:linear-gradient(90deg,var(--teal2),var(--teal));transition:width 1.3s cubic-bezier(.16,1,.3,1)}
+.bar-pct{font-size:.72rem;font-weight:700;color:var(--teal2);text-align:right}
+
+/* tags */
+.stag-wrap{display:flex;flex-wrap:wrap;gap:.45rem}
+.stag{background:var(--white);border:1px solid var(--border);color:var(--muted);font-size:.78rem;font-weight:500;padding:.3rem .8rem;border-radius:50px;transition:all .2s}
+.stag:hover{background:#f0fdfa;border-color:#99f6e4;color:#0f766e}
+
+/* certs */
+.cert-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.cert-item{display:flex;align-items:flex-start;gap:.8rem;padding:.9rem;background:var(--white);border:1px solid var(--border);border-radius:10px}
+.cert-ic{width:34px;height:34px;flex-shrink:0;border-radius:8px;background:#f0fdfa;border:1px solid #99f6e4;display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:800;color:var(--teal2)}
+.cert-nm{font-size:.82rem;font-weight:600;color:var(--text);line-height:1.3}
+.cert-org{font-size:.72rem;color:var(--light);margin-top:.15rem}
+
+/* ====================================================
+   RESUME
+==================================================== */
+#resume{background:linear-gradient(135deg,#061420 0%,#062b25 100%);padding:5rem 0}
+.res-layout{display:flex;align-items:center;justify-content:space-between;gap:3rem;flex-wrap:wrap}
+.res-left p.body-text{color:rgba(255,255,255,.5);margin-top:-1.5rem;max-width:420px}
+.res-card{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);
+  border-radius:var(--r);padding:1.8rem 2rem;
+  display:flex;align-items:center;gap:1.4rem;
+  flex-shrink:0;min-width:340px;
+}
+.res-icon{width:50px;height:50px;border-radius:12px;background:var(--teal-dim);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.res-fn{font-weight:600;color:var(--white);font-size:.95rem}
+.res-meta{font-size:.75rem;color:rgba(255,255,255,.35);margin-top:.2rem}
+.dl-btn{
+  display:inline-flex;align-items:center;gap:.45rem;
+  background:var(--teal);color:var(--navy);
+  padding:.65rem 1.35rem;border-radius:50px;
+  font-weight:700;font-size:.84rem;white-space:nowrap;margin-left:auto;
+  transition:background .2s,transform .2s;
+}
+.dl-btn:hover{background:#14e8d5;transform:translateY(-1px)}
+
+/* ====================================================
+   CONTACT
+==================================================== */
+#contact{background:var(--off)}
+.contact-layout{display:grid;grid-template-columns:1fr 1.4fr;gap:5rem;align-items:start}
+.contact-sub{font-size:1.025rem;font-weight:300;color:var(--muted);line-height:1.8;margin-top:-1.5rem;max-width:360px}
+.clink-list{display:flex;flex-direction:column;gap:.9rem}
+.clink{
+  display:flex;align-items:center;gap:1.1rem;
+  background:var(--white);border:1px solid var(--border);
+  border-radius:var(--r);padding:1.25rem 1.4rem;
+  transition:transform .25s,box-shadow .25s,border-color .25s;
+}
+.clink:hover{transform:translateX(5px);box-shadow:var(--card-shadow);border-color:rgba(14,207,190,.35)}
+.clink-icon{width:42px;height:42px;flex-shrink:0;border-radius:10px;background:#f0fdfa;border:1px solid #99f6e4;display:flex;align-items:center;justify-content:center;color:var(--teal2)}
+.clink-lbl{font-size:.67rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--teal2);margin-bottom:.15rem}
+.clink-val{font-size:.9rem;font-weight:500;color:var(--text)}
+.clink-arr{margin-left:auto;color:var(--border);transition:color .2s,transform .2s;flex-shrink:0}
+.clink:hover .clink-arr{color:var(--teal2);transform:translateX(3px)}
+
+/* ====================================================
+   FOOTER
+==================================================== */
+footer{background:var(--navy);border-top:1px solid var(--border-dark);padding:2.2rem 0}
+.foot-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem}
+.foot-logo{font-family:var(--font-d);font-size:1.25rem;font-weight:800;color:var(--white)}
+.foot-logo span{color:var(--teal)}
+.foot-sub{font-size:.75rem;color:rgba(255,255,255,.3);margin-top:.2rem}
+.foot-orgs{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;justify-content:center}
+.foot-orgs span{font-size:.75rem;color:rgba(255,255,255,.3)}
+.foot-orgs .dot{color:rgba(14,207,190,.4)}
+.foot-copy{font-size:.72rem;color:rgba(255,255,255,.2)}
+
+/* ====================================================
+   RESPONSIVE
+==================================================== */
+@media(max-width:900px){
+  .about-layout{grid-template-columns:1fr;gap:2.5rem}
+  .about-sticky{position:static}
+  .work-grid{grid-template-columns:1fr}
+  .tgrid{grid-template-columns:1fr;max-width:560px;margin:0 auto}
+  .skills-grid{grid-template-columns:1fr}
+  .cert-grid{grid-template-columns:1fr}
+  .contact-layout{grid-template-columns:1fr;gap:2.5rem}
+  .res-layout{flex-direction:column}
+  .res-card{min-width:unset;width:100%}
+}
+@media(max-width:640px){
+  .nav-ul{display:none}
+  .ham{display:flex}
+  section{padding:4rem 0}
+  .hero-name{font-size:clamp(4rem,18vw,7rem)}
+  .hero-stats{flex-wrap:wrap}
+  .hstat{min-width:45%;border-bottom:1px solid rgba(255,255,255,.07)}
+  .foot-row{flex-direction:column;text-align:center}
+  .foot-orgs{justify-content:center}
+}
+/* involvement cards */
+.inv-card{background:var(--navy2);border:1px solid var(--border-dark);border-radius:var(--r);padding:1.6rem;transition:border-color .3s,transform .3s}
+.inv-card:hover{border-color:rgba(14,207,190,.3);transform:translateY(-3px)}
+.inv-icon{font-size:1.6rem;margin-bottom:.9rem;font-family:var(--font-d);font-weight:800;color:var(--teal);line-height:1}
+.inv-role{font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:.3rem}
+.inv-org{font-size:.9rem;font-weight:600;color:var(--white);margin-bottom:.6rem;line-height:1.3}
+.inv-desc{font-size:.8rem;font-weight:300;color:rgba(255,255,255,.45);line-height:1.65}
+@media(max-width:860px){#involvement .container>div{grid-template-columns:1fr 1fr!important}}
+@media(max-width:540px){#involvement .container>div{grid-template-columns:1fr!important}}
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ══════════════════════════════════════ -->
+<header id="nav">
+  <div class="nav-wrap">
+    <a href="#hero" class="logo">Agney<span>.</span></a>
+    <ul class="nav-ul">
+      <li><a href="#about"   class="nav-a">About</a></li>
+      <li><a href="#work"    class="nav-a">Work</a></li>
+      <li><a href="#skills"  class="nav-a">Skills</a></li>
+      <li><a href="#resume"  class="nav-a">Resume</a></li>
+      <li><a href="#contact" class="nav-a nav-pill">Contact</a></li>
+    </ul>
+    <button class="ham" id="ham" aria-label="Menu">
+      <span class="ham-s"></span><span class="ham-s"></span><span class="ham-s"></span>
+    </button>
+  </div>
+</header>
+
+<div class="drawer" id="drawer">
+  <ul>
+    <li><a href="#about"   class="drawer-a">About</a></li>
+    <li><a href="#work"    class="drawer-a">Work</a></li>
+    <li><a href="#skills"  class="drawer-a">Skills</a></li>
+    <li><a href="#resume"  class="drawer-a">Resume</a></li>
+    <li><a href="#contact" class="drawer-a">Contact</a></li>
+  </ul>
+</div>
+
+<!-- ══ HERO ══════════════════════════════════════ -->
+<section id="hero">
+  <div class="blob blob-a"></div>
+  <div class="blob blob-b"></div>
+
+  <div class="hero-inner">
+    <div class="hero-chip">
+      <span class="chip-dot"></span>
+      Bachelor's in Economics &nbsp;·&nbsp; Rutgers, New Brunswick &nbsp;·&nbsp; Class of '27
+    </div>
+
+    <h1 class="hero-name">
+      Agney<br/><span class="italic">Singh</span>
+    </h1>
+
+    <p class="hero-role">Economics Student &nbsp;·&nbsp; Strategist &nbsp;·&nbsp; Analyst</p>
+
+    <p class="hero-tag">
+      Aspiring corporate leader who drives change by creating mutual wealth for the broader community.
+    </p>
+
+    <div class="hero-stats">
+      <div class="hstat">
+        <span class="hstat-v">$11.4M</span>
+        <span class="hstat-l">Annual savings captured</span>
+      </div>
+      <div class="hstat">
+        <span class="hstat-v">160%</span>
+        <span class="hstat-l">Demand growth forecast</span>
+      </div>
+      <div class="hstat">
+        <span class="hstat-v">4</span>
+        <span class="hstat-l">Top-tier internships</span>
+      </div>
+      <div class="hstat">
+        <span class="hstat-v">98%</span>
+        <span class="hstat-l">Client retention rate</span>
+      </div>
+    </div>
+  </div>
+
+  <a href="#about" class="scroll-arrow" aria-label="Scroll down">
+    <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M13 5v16M6 14l7 7 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+</section>
+
+<!-- ══ ABOUT ══════════════════════════════════════ -->
+<section id="about">
+  <div class="container">
+    <div class="about-layout">
+
+      <div class="about-sticky r">
+        <div class="about-label"><span class="about-label-dot"></span>02 — About Me</div>
+        <h2 class="about-sh">Bridging<br/>numbers<br/>&amp; <em>narrative</em></h2>
+        <div class="teal-line" style="margin-top:1.5rem"></div>
+      </div>
+
+      <div class="about-body r d1">
+        <p>I'm a junior at <strong>Rutgers University, New Brunswick</strong>, pursuing a B.S. in <strong>Economics</strong> with a minor in Business Administration — graduating May 2027.</p>
+        <p>My internship track spans some of the world's most respected institutions: supply chain strategy at <strong>Abbott Laboratories</strong>, M&amp;A consulting at <strong>Ernst &amp; Young</strong>, corporate venture capital research at <strong>Hewlett-Packard</strong>, and sponsorship management at <strong>Scarlet Assets Management Company</strong>.</p>
+        <p>I combine quantitative analysis with business strategy to solve real problems — whether that's modeling a $11.4M cost-saving opportunity, benchmarking 40+ global manufacturing sites, or identifying the next breakout AI startup.</p>
+        <p>Outside academics and work, I serve as <strong>Vice President of Kappa Sigma Fraternity</strong> at Rutgers and am actively involved in the investment banking and consulting communities on campus.</p>
+        <div class="chip-row">
+          <span class="chip">📍 New York</span>
+          <span class="chip">🎓 Dean's List · Spring 2025</span>
+          <span class="chip">🌐 English &amp; Hindi</span>
+          <span class="chip">🏛️ Wharton Certified</span>
+          <span class="chip">🎯 Expected May 2027</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ WORK ══════════════════════════════════════ -->
+<section id="work">
+  <div class="container">
+    <div class="sec-head r">
+      <span class="eyebrow">03 — Projects &amp; Work</span>
+      <h2 class="sh">Where I've made <em>an impact</em></h2>
+    </div>
+
+    <div class="work-grid">
+
+      <!-- PGIM -->
+      <article class="wc r" style="border:2px solid rgba(14,207,190,.35)">
+        <div class="wc-top">
+          <div class="logo-wrap">
+            <img class="co-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Prudential_Financial_logo.svg/320px-Prudential_Financial_logo.svg.png" alt="PGIM Prudential"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+            <span class="logo-fb">PGIM</span>
+          </div>
+          <span class="wtag t-vc">Investment</span>
+        </div>
+        <div class="wc-body">
+          <p class="wdate">Summer 2026 &nbsp;·&nbsp; <span style="color:var(--teal);font-weight:600">Incoming</span></p>
+          <h3 class="wrole">Global Services Intern</h3>
+          <p class="wconame">PGIM &nbsp;·&nbsp; Prudential Financial</p>
+          <p class="wdesc">Incoming intern at PGIM — the global investment management business of Prudential Financial, one of the world's largest investment managers with over $1.3 trillion in assets under management across public and private asset classes worldwide.</p>
+        </div>
+        <div class="wc-foot">
+          <span class="wmet">$1.3T AUM</span>
+          <span class="wmet">Global Investment Management</span>
+        </div>
+      </article>
+
+      <!-- Abbott -->
+      <article class="wc r">
+        <div class="wc-top">
+          <div class="logo-wrap">
+            <img class="co-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Abbott_Laboratories_logo.svg/320px-Abbott_Laboratories_logo.svg.png" alt="Abbott Laboratories"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+            <span class="logo-fb">Abbott</span>
+          </div>
+          <span class="wtag t-strat">Strategy</span>
+        </div>
+        <div class="wc-body">
+          <p class="wdate">Jun – Aug 2025</p>
+          <h3 class="wrole">Network Strategy Intern</h3>
+          <p class="wconame">Abbott Laboratories</p>
+          <p class="wdesc">Formulated global supply chain strategy by forecasting 160% demand growth, quantified 30–40M lb. production gaps to target 8–12% ROI, and captured $11.4M/year in savings through targeted insourcing.</p>
+          <ul class="wbullets">
+            <li>Benchmarked 40+ global manufacturing sites</li>
+            <li>Built demand scenarios for 100M+ lbs. SKU decisions</li>
+            <li>Unlocked 30% additional capacity (11.9M lbs.)</li>
+          </ul>
+        </div>
+        <div class="wc-foot">
+          <span class="wmet">$11.4M/yr saved</span>
+          <span class="wmet">160% growth model</span>
+          <span class="wmet">40+ sites benchmarked</span>
+        </div>
+      </article>
+
+      <!-- EY -->
+      <article class="wc r d1">
+        <div class="wc-top">
+          <div class="logo-wrap">
+            <img class="co-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/EY_logo_2019.svg/320px-EY_logo_2019.svg.png" alt="Ernst & Young"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+            <span class="logo-fb">EY</span>
+          </div>
+          <span class="wtag t-con">Consulting</span>
+        </div>
+        <div class="wc-body">
+          <p class="wdate">Jun – Aug 2024</p>
+          <h3 class="wrole">Consulting, Strategy &amp; M&amp;As</h3>
+          <p class="wconame">Ernst &amp; Young (EY)</p>
+          <p class="wdesc">Assessed healthcare data from 706 medical colleges, identifying gaps in 50% of institutions. Delivered 10 strategic recommendations to modernize India's medical education system for senior stakeholders.</p>
+          <ul class="wbullets">
+            <li>Conducted 15 in-depth stakeholder interviews</li>
+            <li>Proposed expansion: 706 → 918 colleges</li>
+            <li>Modernization roadmap covering 5,000+ modules</li>
+          </ul>
+        </div>
+        <div class="wc-foot">
+          <span class="wmet">706 colleges assessed</span>
+          <span class="wmet">10 strategic recs</span>
+        </div>
+      </article>
+
+      <!-- Scarlet Assets -->
+      <article class="wc r d2">
+        <div class="wc-top">
+          <div class="logo-wrap">
+            <div class="logo-init" style="background:var(--white);color:var(--teal2);border:1px solid var(--border)">SA</div>
+          </div>
+          <span class="wtag t-ops">Asset Management</span>
+        </div>
+        <div class="wc-body">
+          <p class="wdate">Aug – Nov 2024</p>
+          <h3 class="wrole">Sponsorship Management Intern</h3>
+          <p class="wconame">Scarlet Assets Management Company</p>
+          <p class="wdesc">Managed 15+ Rutgers Football sponsorship accounts with 98% retention. Supported 7 live event activations that drove a 20% increase in fan engagement and 15% improvement in sponsor ROI.</p>
+          <ul class="wbullets">
+            <li>98% retention across 15+ client accounts</li>
+            <li>7 event activations executed end-to-end</li>
+            <li>+20% fan engagement, +15% sponsor ROI</li>
+          </ul>
+        </div>
+        <div class="wc-foot">
+          <span class="wmet">98% retention</span>
+          <span class="wmet">+20% engagement</span>
+        </div>
+      </article>
+
+      <!-- HP -->
+      <article class="wc r d3">
+        <div class="wc-top">
+          <div class="logo-wrap">
+            <img class="co-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/HP_logo_2012.svg/240px-HP_logo_2012.svg.png" alt="HP"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+            <span class="logo-fb">HP</span>
+          </div>
+          <span class="wtag t-vc">Venture Capital</span>
+        </div>
+        <div class="wc-body">
+          <p class="wdate">Aug – Sep 2024</p>
+          <h3 class="wrole">Corporate Venture Capital &amp; Business Analytics</h3>
+          <p class="wconame">Hewlett-Packard (HP) &nbsp;·&nbsp; Externship</p>
+          <p class="wdesc">Researched HP's AI startup landscape, identifying 3 key market trends and 5 growth opportunities. Prepared investment-ready briefs for 2 high-potential startups aligned with corporate VC objectives.</p>
+          <ul class="wbullets">
+            <li>Identified 3 macro AI market trends</li>
+            <li>Sourced &amp; evaluated 2 investment targets</li>
+            <li>Delivered growth-focused investment memos</li>
+          </ul>
+        </div>
+        <div class="wc-foot">
+          <span class="wmet">5 growth opportunities</span>
+          <span class="wmet">2 investment memos</span>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ ON-CAMPUS INVOLVEMENT ══════════════════════ -->
+<section id="involvement" style="background:var(--navy);padding:5rem 0">
+  <div class="container">
+    <div class="sec-head r">
+      <span class="eyebrow eyebrow-dim">On-Campus</span>
+      <h2 class="sh sh-light">Involvement &amp; <em>leadership</em></h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem">
+
+      <div class="inv-card r">
+        <div class="inv-icon">ΚΣ</div>
+        <p class="inv-role">Vice President</p>
+        <p class="inv-org">Kappa Sigma Fraternity</p>
+        <p class="inv-desc">Leading a chapter of <strong style="color:var(--teal);font-weight:600">40+ members</strong>, overseeing chapter operations, managing a <strong style="color:var(--teal);font-weight:600">$15,000 budget</strong>, driving member development, and fostering community initiatives at Rutgers.</p>
+      </div>
+
+      <div class="inv-card r d1">
+        <div class="inv-icon">📈</div>
+        <p class="inv-role">Member</p>
+        <p class="inv-org">Little Investment Bankers of Rutgers (LIBOR)</p>
+        <p class="inv-desc">Engaging with investment banking concepts, financial modeling, and industry networking within Rutgers' finance community.</p>
+      </div>
+
+      <div class="inv-card r d2">
+        <div class="inv-icon">💼</div>
+        <p class="inv-role">Member</p>
+        <p class="inv-org">Rutgers Consulting Group (RCG)</p>
+        <p class="inv-desc">Participating in consulting case discussions, strategy workshops, and professional development events on campus.</p>
+      </div>
+
+      <div class="inv-card r d3">
+        <div class="inv-icon">🎓</div>
+        <p class="inv-role">Student Agent</p>
+        <p class="inv-org">Rutgers One Stop Student Services</p>
+        <p class="inv-desc">Supporting students with academic advising, financial aid guidance, and navigating university resources.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ SKILLS ══════════════════════════════════════ -->
+<section id="skills">
+  <div class="container">
+    <div class="sec-head r">
+      <span class="eyebrow">04 — Skills</span>
+      <h2 class="sh">Tools &amp; <em>capabilities</em></h2>
+    </div>
+
+    <div class="skills-grid">
+
+      <div class="sk-card r">
+        <p class="sk-title">⚙️ Technical Proficiency</p>
+        <div class="stag-wrap">
+          <span class="stag">MS Excel / Office</span>
+          <span class="stag">Python</span>
+          <span class="stag">SQL</span>
+          <span class="stag">Power BI</span>
+          <span class="stag">R</span>
+          <span class="stag">Java</span>
+          <span class="stag">Geographic Information Systems</span>
+          <span class="stag">Datafinder</span>
+        </div>
+      </div>
+
+      <div class="sk-card r d1">
+        <p class="sk-title">📊 Business &amp; Strategy</p>
+        <div class="stag-wrap">
+          <span class="stag">Supply Chain Strategy</span>
+          <span class="stag">Financial Modeling</span>
+          <span class="stag">M&amp;A Analysis</span>
+          <span class="stag">Market Research</span>
+          <span class="stag">Venture Capital</span>
+          <span class="stag">Stakeholder Mgmt</span>
+          <span class="stag">Data Analysis</span>
+          <span class="stag">Strategic Planning</span>
+          <span class="stag">GIS Mapping</span>
+          <span class="stag">Datafinder</span>
+          <span class="stag">Leadership</span>
+          <span class="stag">Communication</span>
+        </div>
+      </div>
+
+      <div class="sk-card r d2" style="grid-column:1/-1">
+        <p class="sk-title">🎓 Certifications &amp; Achievements</p>
+        <div class="cert-grid">
+          <div class="cert-item">
+            <div class="cert-ic">W</div>
+            <div><p class="cert-nm">Business &amp; Financial Modeling Specialization</p><p class="cert-org">The Wharton School, University of Pennsylvania</p></div>
+          </div>
+          <div class="cert-item">
+            <div class="cert-ic">C</div>
+            <div><p class="cert-nm">Microsoft Excel Applications (3 courses)</p><p class="cert-org">Coursera</p></div>
+          </div>
+          <div class="cert-item">
+            <div class="cert-ic">✦</div>
+            <div><p class="cert-nm">Dean's List — Spring 2025</p><p class="cert-org">Rutgers University, New Brunswick</p></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ RESUME ══════════════════════════════════════ -->
+<section id="resume">
+  <div class="container">
+    <div class="res-layout r">
+      <div class="res-left">
+        <span class="eyebrow eyebrow-dim">05 — Resume</span>
+        <h2 class="sh sh-light" style="margin-bottom:1.5rem">Download my <em>full Resume</em></h2>
+        <p class="body-text" style="color:rgba(255,255,255,.4);font-size:.9rem;visibility:hidden;height:0;margin:0"></p>
+      </div>
+      <div class="res-card">
+        <div class="res-icon">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M7 4h8l7 7v11a2 2 0 01-2 2H7a2 2 0 01-2-2V6a2 2 0 012-2z" stroke="#0ecfbe" stroke-width="1.7" stroke-linejoin="round" fill="none"/><path d="M15 4v7h7" stroke="#0ecfbe" stroke-width="1.7" stroke-linejoin="round"/><path d="M9 17h8M9 21h5" stroke="#0ecfbe" stroke-width="1.7" stroke-linecap="round"/></svg>
+        </div>
+        <div>
+          <p class="res-fn">AgneySingh_Resume.pdf</p>
+          <p class="res-meta">2025 &nbsp;·&nbsp; 1 page</p>
+        </div>
+        <a href="https://drive.google.com/uc?export=download&id=1gu_qAEUrK6NaCw5MDcIoSR4GBvty7eXO" download="AgneySingh_Resume.pdf" class="dl-btn">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M7.5 2v9M4 8l3.5 3.5L11 8M2 13h11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Download
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CONTACT ══════════════════════════════════════ -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-layout">
+      <div class="r">
+        <span class="eyebrow">06 — Contact</span>
+        <h2 class="sh" style="margin-bottom:1.2rem">Let's <em>connect</em></h2>
+        <p class="contact-sub">Open to internships, research collaborations, and professional opportunities. Reach out any time.</p>
+      </div>
+      <div class="clink-list r d1">
+        <a href="mailto:agney.singh@rutgers.edu" class="clink">
+          <div class="clink-icon">
+            <svg width="19" height="19" viewBox="0 0 19 19" fill="none"><rect x="2" y="4" width="15" height="11" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M2 7l7.5 4.5L17 7" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          </div>
+          <div><p class="clink-lbl">Email</p><p class="clink-val">agney.singh@rutgers.edu</p></div>
+          <svg class="clink-arr" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/agneysingh" target="_blank" rel="noopener" class="clink">
+          <div class="clink-icon">
+            <svg width="19" height="19" viewBox="0 0 19 19" fill="none"><rect x="2" y="2" width="15" height="15" rx="2.5" stroke="currentColor" stroke-width="1.6"/><path d="M6 8v5M6 5.5V6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M9 13V9.5a2 2 0 014 0V13M9 8v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </div>
+          <div><p class="clink-lbl">LinkedIn</p><p class="clink-val">linkedin.com/in/agneysingh</p></div>
+          <svg class="clink-arr" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </a>
+        <a href="tel:+13329997001" class="clink">
+          <div class="clink-icon">
+            <svg width="19" height="19" viewBox="0 0 19 19" fill="none"><path d="M4 4h3l1.5 3.5L7 9a9 9 0 004 4l1.5-1.5L16 13v3a1.5 1.5 0 01-1.5 1.5A13 13 0 014 4z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          </div>
+          <div><p class="clink-lbl">Phone</p><p class="clink-val">+1 (332) 999-7001</p></div>
+          <svg class="clink-arr" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══════════════════════════════════════ -->
+<footer>
+  <div class="container foot-row">
+    <div>
+      <p class="foot-logo">Agney<span>.</span></p>
+      <p class="foot-sub">Economics · Rutgers University, New Brunswick</p>
+    </div>
+    <div class="foot-orgs">
+    </div>
+    <p class="foot-copy">© 2025 Agney Singh</p>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// NAV shadow
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('up',scrollY>20),{passive:true});
+
+// Hamburger
+const ham=document.getElementById('ham'),drawer=document.getElementById('drawer');
+ham.addEventListener('click',()=>{
+  const o=ham.classList.toggle('open');
+  drawer.classList.toggle('open',o);
+});
+document.querySelectorAll('.drawer-a').forEach(a=>a.addEventListener('click',()=>{
+  ham.classList.remove('open');drawer.classList.remove('open');
+}));
+
+// Scroll reveal - add animate class via JS so CSS fallback keeps things visible
+const revealEls = document.querySelectorAll('.r');
+revealEls.forEach(el => el.classList.add('animate'));
+const obs=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){e.target.classList.add('on');obs.unobserve(e.target)}
+}),{threshold:0,rootMargin:'0px 0px 0px 0px'});
+revealEls.forEach(el=>obs.observe(el));
+window.addEventListener('load',()=>{
+  document.querySelectorAll('.r').forEach(el=>{
+    const rect=el.getBoundingClientRect();
+    if(rect.top<window.innerHeight+100) el.classList.add('on');
+  });
+});
+
+// Skill bars
+const bObs=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){
+    setTimeout(()=>e.target.style.width=e.target.dataset.w+'%',150);
+    bObs.unobserve(e.target);
+  }
+}),{threshold:.3});
+document.querySelectorAll('.bar-fill').forEach(el=>bObs.observe(el));
+
+// Card tilt
+document.querySelectorAll('.wc').forEach(c=>{
+  c.addEventListener('mousemove',e=>{
+    const r=c.getBoundingClientRect(),x=(e.clientX-r.left-r.width/2)/(r.width/2),y=(e.clientY-r.top-r.height/2)/(r.height/2);
+    c.style.transform=`translateY(-5px) perspective(800px) rotateX(${-y*1.8}deg) rotateY(${x*1.8}deg)`;
+  
